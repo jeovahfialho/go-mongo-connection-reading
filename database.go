@@ -11,7 +11,7 @@ var client *mongo.Client
 
 func InitDB() (*mongo.Client, error) {
 	serverAPI := options.ServerAPI(options.ServerAPIVersion1)
-	opts := options.Client().ApplyURI("mongodb+srv://jeovahfialho:79j53f@cluster-mongo-jeovahfia.ymkjshk.mongodb.net/?retryWrites=true&w=majority").SetServerAPIOptions(serverAPI)
+	opts := options.Client().ApplyURI("mongodb+srv://<user>:<password>@cluster-mongo-jeovahfia.ymkjshk.mongodb.net/?retryWrites=true&w=majority").SetServerAPIOptions(serverAPI)
 
 	var err error
 	client, err = mongo.Connect(context.TODO(), opts)
