@@ -10,6 +10,23 @@ import (
 )
 
 func SetupRoutes(router *gin.Engine, client *mongo.Client) {
+
+	// Rota para inserir um fornecedor no banco de dados
+	router.POST("/inserir-fornecedor", func(c *gin.Context) {
+		var fornecedor Fornecedor
+		if err := c.ShouldBindJSON(&fornecedor); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+
+		if err := InserirFornecedor(client, fornecedor); err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
+
+		c.JSON(http.StatusOK, gin.H{"message": "Fornecedor inserido com sucesso"})
+	})
+
 	router.GET("/get-data", func(c *gin.Context) {
 		collection := client.Database("sample_airbnb").Collection("listingsAndReviews")
 		filter := bson.D{{}}
